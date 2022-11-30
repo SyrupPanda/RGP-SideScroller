@@ -20,9 +20,9 @@ public class RedPlagueMover : MonoBehaviour
 	
 	void OnTriggerEnter2D(Collider2D other)
 	{
-		if (other.tag == "Player")
-		{
-			Destroy (other.gameObject);
-		}
+		if (other.GetComponent<HealthComponent>() != null)
+        {
+			other.GetComponent<HealthComponent>().TakeDamage(1);
+        }
 	}
 }
