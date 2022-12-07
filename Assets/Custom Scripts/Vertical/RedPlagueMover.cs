@@ -6,8 +6,10 @@ public class RedPlagueMover : MonoBehaviour
 	public float vSpeed;
 	public float maxXOffset;
 	protected float origXPos;
-	
-	void Start()
+	public float collisionDamage;
+	public float hitPoints;
+
+    void Start()
 	{
 		origXPos = transform.position.x;
 	}
@@ -20,9 +22,9 @@ public class RedPlagueMover : MonoBehaviour
 	
 	void OnTriggerEnter2D(Collider2D other)
 	{
-		if (other.tag == "Player")
-		{
-			Destroy (other.gameObject);
-		}
+		if (other.GetComponent<HealthComponent>() != null)
+        {
+			other.GetComponent<HealthComponent>().TakeDamage(collisionDamage);
+        }
 	}
 }

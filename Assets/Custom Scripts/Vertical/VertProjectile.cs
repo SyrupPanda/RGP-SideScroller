@@ -4,6 +4,7 @@ using System.Collections;
 public class VertProjectile : MonoBehaviour 
 {
 	public float speed;
+	public float damage;
 	
 	void Update () 
 	{
@@ -19,8 +20,11 @@ public class VertProjectile : MonoBehaviour
 	{
 		if (other.tag == "Enemy")
 		{
-			Destroy(other.gameObject);
-			Destroy(gameObject);
+			if (other.GetComponent<EnemyHealth>() != null)
+            {
+				other.GetComponent<EnemyHealth>().takeDamage(damage);
+				Destroy(gameObject);
+            }
 		}
 	}
 }
