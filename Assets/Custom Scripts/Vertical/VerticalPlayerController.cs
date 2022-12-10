@@ -4,12 +4,17 @@ using System.Collections;
 public class VerticalPlayerController : MonoBehaviour 
 {
 	public GameObject projectile;
+	public GameObject projectile2;
 	public Transform firePoint1, firePoint2;
 	public float maxSpeed;
 	public float moveForce;
 	public float fireRate;
-	
-	protected float horizVelocity;
+	public float speed;
+	public int bulletAmount;
+
+    private const float radius = 1f;
+
+    protected float horizVelocity;
 	protected float vertVelocity;
 	protected Rigidbody2D myRigidbody;
 	
@@ -23,9 +28,29 @@ public class VerticalPlayerController : MonoBehaviour
 		cam = Camera.main.GetComponent<VerticalPushCamera>();
 		myRigidbody = GetComponent<Rigidbody2D>();
 	}
-	
-	// Update is called once per frame
-	void Update () 
+
+    private void SpawnProjectile(int magazine, Vector2 ports)
+    {
+        float angleStep = 360f / magazine;
+        float angle = 0f;
+
+        for (int i = 0; i <= magazine -1; i++)
+        {
+            float projectileDirXPosition = ports.x + Mathf.Sin((angle * Mathf.PI) / 180) * radius;
+            float projectileDirYPosiiton = ports.y + Mathf.Cos((angle * Mathf.PI) / 180) * radius;
+
+            Vector2 projectileVector = new Vector2(projectileDirXPosition, projectileDirYPosiiton);
+            Vector2 projectileMoveDirection = (projectileVector - ports).normalized* speed;
+
+			GameObject bullet = Instantiate(projectile, ports, Quaternion.identity);
+			bullet.GetComponent<Rigidbody2D>().velocity = projectileMoveDirection;
+
+            angle += angleStep;
+        }
+    }
+
+    // Update is called once per frame
+    void Update () 
 	{
 		transform.position = new Vector2(transform.position.x, transform.position.y + (cam.speed * Time.deltaTime));
 		
@@ -42,9 +67,11 @@ public class VerticalPlayerController : MonoBehaviour
 		
 		if (Input.GetButton("Fire1") && firing == false)
 		{
-			Instantiate (projectile, firePoint1.position, transform.rotation);
-			Instantiate (projectile, firePoint2.position, transform.rotation);
-			firing = true;
+			//Instantiate (projectile, firePoint1.position, transform.rotation);
+			//Instantiate (projectile, firePoint2.position, transform.rotation);
+			SpawnProjectile(bulletAmount, firePoint1.position);
+
+            firing = true;
 		}
 		
 		horizVelocity = Input.GetAxis("Horizontal");
