@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEditor.Experimental.GraphView;
 
 public class VerticalPlayerController : MonoBehaviour 
 {
 	public GameObject projectile;
-	public GameObject projectile2;
 	public Transform firePoint1, firePoint2;
 	public float maxSpeed;
 	public float moveForce;
@@ -12,7 +12,7 @@ public class VerticalPlayerController : MonoBehaviour
 	public float speed;
 	public int bulletAmount;
 
-    private const float radius = 1f;
+    private const float radius = 5f;
 
     protected float horizVelocity;
 	protected float vertVelocity;
@@ -28,26 +28,6 @@ public class VerticalPlayerController : MonoBehaviour
 		cam = Camera.main.GetComponent<VerticalPushCamera>();
 		myRigidbody = GetComponent<Rigidbody2D>();
 	}
-
-    private void SpawnProjectile(int magazine, Vector2 ports)
-    {
-        float angleStep = 360f / magazine;
-        float angle = 0f;
-
-        for (int i = 0; i <= magazine -1; i++)
-        {
-            float projectileDirXPosition = ports.x + Mathf.Sin((angle * Mathf.PI) / 180) * radius;
-            float projectileDirYPosiiton = ports.y + Mathf.Cos((angle * Mathf.PI) / 180) * radius;
-
-            Vector2 projectileVector = new Vector2(projectileDirXPosition, projectileDirYPosiiton);
-            Vector2 projectileMoveDirection = (projectileVector - ports).normalized* speed;
-
-			GameObject bullet = Instantiate(projectile, ports, Quaternion.identity);
-			bullet.GetComponent<Rigidbody2D>().velocity = projectileMoveDirection;
-
-            angle += angleStep;
-        }
-    }
 
     // Update is called once per frame
     void Update () 
@@ -67,10 +47,11 @@ public class VerticalPlayerController : MonoBehaviour
 		
 		if (Input.GetButton("Fire1") && firing == false)
 		{
-			//Instantiate (projectile, firePoint1.position, transform.rotation);
-			//Instantiate (projectile, firePoint2.position, transform.rotation);
-			SpawnProjectile(bulletAmount, firePoint1.position);
-
+			GameObject tmpbul1 = Instantiate (projectile, firePoint1.position, transform.rotation);
+			GameObject tmpbul2 = Instantiate (projectile, firePoint2.position, transform.rotation);
+			Vector2 bulletVelocity = new Vector2(0, 1* speed);
+			tmpbul1.GetComponent<Rigidbody2D>().velocity = bulletVelocity;
+            tmpbul2.GetComponent<Rigidbody2D>().velocity = bulletVelocity;
             firing = true;
 		}
 		
