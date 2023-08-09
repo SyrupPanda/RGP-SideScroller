@@ -24,7 +24,7 @@ public class RadialBullet : MonoBehaviour
 
             if (tester < 0)
             {
-                projectileDirYPosition *= -1;
+                projectileDirYPosition += 1;
             }
 
             Vector2 projectileVector = new Vector2(projectileDirXPosition, projectileDirYPosition);
@@ -35,10 +35,10 @@ public class RadialBullet : MonoBehaviour
 
             angle += angleStep;
         }
+    }
 
-        void Update()
-        {
-            SpawnProjectile(bulletAmount, origin);
-        }
+    void Update()
+    {
+        SpawnProjectile(bulletAmount, origin);
     }
 }

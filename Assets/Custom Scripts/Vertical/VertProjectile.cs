@@ -5,12 +5,12 @@ public class VertProjectile : MonoBehaviour
 {
 	public float speed;
 	public float damage;
-	
-	//void Update () 
+
+	//void Update()
 	//{
 	//	transform.position = new Vector2(transform.position.x, transform.position.y + (speed * Time.deltaTime));
 	//}
-	
+
 	void OnBecameInvisible()
 	{
 		Destroy(gameObject);

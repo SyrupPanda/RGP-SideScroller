@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-using UnityEditor.Experimental.GraphView;
+
 
 public class VerticalPlayerController : MonoBehaviour 
 {
@@ -49,10 +49,10 @@ public class VerticalPlayerController : MonoBehaviour
 		{
 			GameObject tmpbul1 = Instantiate (projectile, firePoint1.position, transform.rotation);
 			GameObject tmpbul2 = Instantiate (projectile, firePoint2.position, transform.rotation);
-			Vector2 bulletVelocity = new Vector2(0, 1* speed);
-			tmpbul1.GetComponent<Rigidbody2D>().velocity = bulletVelocity;
-            tmpbul2.GetComponent<Rigidbody2D>().velocity = bulletVelocity;
-            firing = true;
+			Vector2 bulletVelocity = new Vector2(0, 1);
+			tmpbul1.GetComponent<Rigidbody2D>().velocity = bulletVelocity.normalized * ((speed) + (cam.speed * Time.deltaTime));
+			tmpbul2.GetComponent<Rigidbody2D>().velocity = bulletVelocity.normalized * ((speed) + (cam.speed * Time.deltaTime));
+			firing = true;
 		}
 		
 		horizVelocity = Input.GetAxis("Horizontal");

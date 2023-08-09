@@ -13,6 +13,8 @@ public class EnemyHealth : MonoBehaviour
         if (hitPoints <= 0)
         {
             Destroy(gameObject);
+            ScoreSystem.instance.AddScore(10);
+            Destroy(gameObject);
         }
     }
 }
