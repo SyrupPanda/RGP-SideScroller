@@ -10,7 +10,12 @@ public class EnemySpawner : MonoBehaviour
 
     private float time = 0;
     private int spawnCount = 0;
- 
+
+    public float minSpeed;
+    public float maxSpeed;
+    public float minOff;
+    public float maxOff;
+
     // Update is called once per frame
     void Update()
     {
@@ -18,14 +23,14 @@ public class EnemySpawner : MonoBehaviour
         if (time > spawnRate)
         {
             GameObject ship = Instantiate(enemyToSpawn, transform.position, transform.rotation);
-            ship.GetComponent<RedPlagueMover>().vSpeed = Random.Range(0.1f, 1.5f);
-            ship.GetComponent<RedPlagueMover>().maxXOffset = Random.Range(0.1f, 2.5f);
+            ship.GetComponent<RedPlagueMover>().vSpeed = Random.Range(minSpeed, maxSpeed);
+            ship.GetComponent<RedPlagueMover>().maxXOffset = Random.Range(minOff, maxOff);
 
             time = 0;
             spawnCount++;
             if(spawnCount > countToSpawn)
             {
-                Destroy(gameObject);
+                time = 0;
             }
         }
     }

@@ -9,7 +9,9 @@ public class RadialBullet : MonoBehaviour
     private const float radius = 5.0f;
     public float speed;
     public int bulletAmount;
-    public Vector2 origin;
+    public float bulletRate;
+
+    private float fireTimer = 0;
     private void SpawnProjectile(int magazine, Vector2 ports)
     {
         float angleStep = 360f / magazine;
@@ -39,6 +41,17 @@ public class RadialBullet : MonoBehaviour
 
     void Update()
     {
-        SpawnProjectile(bulletAmount, origin);
+        fireTimer += Time.deltaTime;
+        if (fireTimer > bulletRate)
+        {
+            SpawnProjectile(bulletAmount, this.gameObject.transform.position);
+            fireTimer = 0;
+        }
+        if (fireTimer < 0)
+        {
+            fireTimer = 0;
+        }
+
+        Debug.Log(fireTimer);
     }
 }

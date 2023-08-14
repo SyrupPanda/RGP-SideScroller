@@ -25,6 +25,7 @@ public class RedPlagueMover : MonoBehaviour
 		if (other.GetComponent<HealthComponent>() != null)
         {
 			other.GetComponent<HealthComponent>().TakeDamage(collisionDamage);
+			Destroy(gameObject);
         }
 	}
 }

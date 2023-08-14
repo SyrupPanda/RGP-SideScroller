@@ -3,7 +3,6 @@ using System.Collections;
 
 public class VertProjectile : MonoBehaviour 
 {
-	public float speed;
 	public float damage;
 
 	//void Update()
